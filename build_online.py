@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_file, send_from_directory, json, make_response
+from flask import Flask, render_template, request, jsonify, send_from_directory, json, make_response
 import build
 import os
 import json
@@ -38,7 +38,6 @@ def ajax():
     logs += result[1]
     message = {"code": 200, "argument": recv_data,
                "logs": logs, "filename": result[0]}
-    print(recv_data)
     return json.dumps(message)
 
 
@@ -50,8 +49,8 @@ def get_file(file_name):
             directory, file_name, as_attachment=True))
         return response
     except Exception as e:
-        return(jsonify({"code": "500", "message": "{}".format(e)}))
+        return jsonify({"code": "500", "message": "{}".format(e)})
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True)
